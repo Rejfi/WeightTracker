@@ -4,14 +4,17 @@ import android.app.Application
 import android.provider.ContactsContract
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import com.example.weighttracker.data.Weight
 import com.example.weighttracker.data.WeightRepository
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.runBlocking
 
-class WeightViewModel(app: Application): AndroidViewModel(app) {
+class WeightViewModel(application: Application): AndroidViewModel(application) {
 
-    private val weightRepository = WeightRepository(app)
+    val x = 10
+
+    private val weightRepository = WeightRepository(application)
 
     private var allWeights: Deferred<LiveData<Map<Long, Double>>> =
         weightRepository.getAllWeightsAsync()

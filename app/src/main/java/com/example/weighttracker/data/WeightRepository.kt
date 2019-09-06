@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.*
 
-class WeightRepository (app: Application){
+class WeightRepository (application: Application){
 
     private var weightDao: WeightDao
 
@@ -15,7 +15,7 @@ class WeightRepository (app: Application){
     //Get database instance
     init {
         val database: WeightDatabase = WeightDatabase.getInstance(
-            app.applicationContext
+            application.applicationContext
         )!!
         weightDao = database.weightDao()
         allWeights = weightDao.getAllWeights()

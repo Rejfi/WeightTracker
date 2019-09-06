@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.weighttracker.R
+import com.example.weighttracker.adapters.ViewPagerAdapter
 import com.example.weighttracker.fragments.WeightTrackerFragment
 import com.google.android.material.tabs.TabLayout
 
@@ -18,9 +19,15 @@ class WeightTrackerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Odpalenie na probe fragmentu WeightTrackerFragment
+        val fm = supportFragmentManager
 
+        //Find Views
+        viewPager = findViewById(R.id.viewPager)
+        tabLayout = findViewById(R.id.tabLayout)
+        //-------------
 
+        viewPager.adapter = ViewPagerAdapter(fm)
+        tabLayout.setupWithViewPager(viewPager)
 
     }
 
