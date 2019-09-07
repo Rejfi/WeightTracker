@@ -12,11 +12,9 @@ import kotlinx.coroutines.runBlocking
 
 class WeightViewModel(application: Application): AndroidViewModel(application) {
 
-    val x = 10
-
     private val weightRepository = WeightRepository(application)
 
-    private var allWeights: Deferred<LiveData<Map<Long, Double>>> =
+    private var allWeights: Deferred<LiveData<List<Weight>>> =
         weightRepository.getAllWeightsAsync()
 
 

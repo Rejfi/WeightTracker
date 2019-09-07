@@ -7,16 +7,16 @@ import androidx.room.*
 interface WeightDao{
 
     @Insert
-    fun putNewWeight(weight: Weight)
+    fun insert(weight: Weight)
 
     @Update
-    fun updateWeight(weight: Weight)
+    fun update(weight: Weight)
 
     @Delete
-    fun deleteWeight(weight: Weight)
+    fun delete(weight: Weight)
 
     @Query("SELECT * FROM weight_table")
-    fun getAllWeights(): LiveData<Map<Long, Double>>
+    fun getAllWeights(): LiveData<List<Weight>>
 
 
 }

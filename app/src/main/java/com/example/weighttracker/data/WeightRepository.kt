@@ -1,16 +1,14 @@
 package com.example.weighttracker.data
 
 import android.app.Application
-import androidx.core.widget.ListViewAutoScrollHelper
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.*
 
 class WeightRepository (application: Application){
 
     private var weightDao: WeightDao
 
-    private var allWeights: LiveData<Map<Long, Double>>
+    private var allWeights: LiveData<List<Weight>>
 
     //Get database instance
     init {
@@ -23,23 +21,23 @@ class WeightRepository (application: Application){
 
     fun insertWeight(weight: Weight){
         CoroutineScope(Dispatchers.IO).launch {
-            weightDao.putNewWeight(weight)
+            weightDao.insert(weight)
         }.start()
     }
 
     fun updateWeight(weight: Weight){
         CoroutineScope(Dispatchers.IO).launch {
-            weightDao.updateWeight(weight)
+            weightDao.update(weight)
         }.start()
     }
 
     fun deleteWeight(weight: Weight){
         CoroutineScope(Dispatchers.IO).launch {
-            weightDao.deleteWeight(weight)
+            weightDao.delete(weight)
         }.start()
     }
 
-    fun getAllWeightsAsync(): Deferred<LiveData<Map<Long, Double>>> =
+    fun getAllWeightsAsync(): Deferred<LiveData<List<Weight>>> =
         CoroutineScope(Dispatchers.IO).async {
            weightDao.getAllWeights()
     }
