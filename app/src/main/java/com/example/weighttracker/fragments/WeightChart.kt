@@ -8,12 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.weighttracker.R
 import com.example.weighttracker.viewmodels.WeightViewModel
+import com.github.mikephil.charting.charts.Chart
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.ChartData
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.IDataSet
 
 class WeightChart : Fragment(){
 
     private lateinit var viewModel: WeightViewModel
-
+    private lateinit var chart: LineChart
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,6 +34,20 @@ class WeightChart : Fragment(){
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application).create(
             WeightViewModel::class.java)
 
+        chart = view!!.findViewById(R.id.weight_chart)
+
+        //Stworzenie nowego wejścia dla wykresu
+        var noweDane:ArrayList<Entry> = ArrayList<Entry>()
+        noweDane.add(Entry(2f,3f))
+
+        //Stworzenie LineDataSet
+        var dataSet: LineDataSet = LineDataSet(noweDane,"Test")
+        dataSet.valueTextSize = 20f
+
+        //Stworzenie danych do narysowania
+        var lineData = LineData(dataSet)
+
+        chart.data = lineData
 
     }
 

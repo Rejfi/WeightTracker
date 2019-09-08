@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weighttracker.R
 import com.example.weighttracker.adapters.RecyclerViewAdapter
+import com.example.weighttracker.data.Weight
 import com.example.weighttracker.viewmodels.WeightViewModel
 import kotlinx.android.synthetic.main.weight_tracker_fragment.*
 
@@ -31,10 +32,19 @@ class WeightTrackerFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        val adapter = RecyclerViewAdapter()
+
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application).create(WeightViewModel::class.java)
         recyclerView = view!!.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(requireContext().applicationContext, 3)
-        recyclerView.adapter = RecyclerViewAdapter()
+        recyclerView.adapter = adapter
+
+        viewModel.getAllWeights().observe(viewLifecycleOwner, Observer {})
+
+        viewModel.getAllWeights().observe(viewLifecycleOwner, Observer<List<Weight>> {
+            //Update recyclerView adapter to show current notes
+            adapter.submitList(it)
+        })
     }
 
 
