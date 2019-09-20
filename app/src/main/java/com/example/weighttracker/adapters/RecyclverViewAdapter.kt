@@ -1,5 +1,6 @@
 package com.example.weighttracker.adapters
 
+import android.text.style.TtsSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weighttracker.R
 import com.example.weighttracker.data.Weight
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeParseException
+import java.util.*
 
 class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
@@ -34,9 +39,13 @@ class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             val weight = getItem(holder.adapterPosition)
+            val weightDate = Date(weight.date * 1000)
+            val date = SimpleDateFormat("EEE, MMM d, ''yy").format(weightDate)
 
             holder.weightTextView.text = weight.weight.toString()
-            holder.dateTextView.text = weight.date.toString()
+            holder.dateTextView.text = date.toString()
+
+
     }
 
 
