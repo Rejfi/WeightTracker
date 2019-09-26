@@ -8,21 +8,23 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.weighttracker.R
+import com.example.weighttracker.helper.ChartHelper
 import com.example.weighttracker.viewmodels.WeightViewModel
-import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.ChartData
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.interfaces.datasets.IDataSet
-import kotlin.random.Random
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import java.text.SimpleDateFormat
+import java.util.*
 
 class WeightChart : Fragment(){
 
     private lateinit var viewModel: WeightViewModel
     private lateinit var chart: LineChart
+    private lateinit var dataSet: LineDataSet
+    private lateinit var lineData: LineData
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,33 +41,28 @@ class WeightChart : Fragment(){
 
         chart = view!!.findViewById(R.id.weight_chart)
         chart.xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
+        chart.xAxis.valueFormatter = MyAxisValueFormatter()
 
         val allWeights = viewModel.getAllWeights().observe(viewLifecycleOwner, Observer {
 
-            val arrayOfEntry = ArrayList<Entry>()
-            if(viewModel.getAllWeights().value != null)
-                for(i in viewModel.getAllWeights().value!!.iterator()){
-                    val newEntry = Entry((i.weight+1).toFloat() ,i.weight.toFloat() /*i.date.toFloat()*/)
-                    arrayOfEntry.add(newEntry)
-                }
+            val arrayOfEntry = ChartHelper.listWeightToEntry(it)
+            dataSet = LineDataSet(arrayOfEntry,"Twoja historia wag")
 
-            //Stworzenie LineDataSet
-            val dataSet: LineDataSet = LineDataSet(arrayOfEntry,"Twoja historia wag")
-            dataSet.valueTextSize = 20f
+            dataSet.valueTextSize = 10f
+            dataSet.lineWidth = 3f
 
-            //Stworzenie danych do narysowania
-            val lineData = LineData(dataSet)
-
+            //Set lineData and draw it
+            lineData = LineData(dataSet)
             chart.data = lineData
-
             chart.invalidate()
         })
 
-
-
-
-
     }
 
+}
 
+private class MyAxisValueFormatter: IndexAxisValueFormatter(){
+    override fun getFormattedValue(value: Float): String {
+        return SimpleDateFormat("dd-MM", Locale.getDefault()).format(Date(value.toLong()))
+    }
 }

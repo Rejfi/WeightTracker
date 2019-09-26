@@ -37,11 +37,8 @@ class AddWeightFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application).create(WeightViewModel::class.java)
 
-
-
         submitWeightButton.setOnClickListener {
-
-            val today = SimpleDateFormat.getTimeInstance().calendar.time
+            val today = Date()
             val weight = Weight(weightAddEditText.text.toString().toDouble(), today.time)
             viewModel.insertWeight(weight)
 
