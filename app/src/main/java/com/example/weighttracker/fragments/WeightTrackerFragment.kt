@@ -8,11 +8,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weighttracker.R
 import com.example.weighttracker.adapters.RecyclerViewAdapter
 import com.example.weighttracker.data.Weight
 import com.example.weighttracker.viewmodels.WeightViewModel
+import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.weight_tracker_fragment.*
 
 class WeightTrackerFragment : Fragment() {
@@ -39,12 +42,29 @@ class WeightTrackerFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(requireContext().applicationContext, 3)
         recyclerView.adapter = adapter
 
-        viewModel.getAllWeights().observe(viewLifecycleOwner, Observer {})
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                viewModel.deleteWeight(adapter.getWeightAtPosition(viewHolder.adapterPosition))
+
+            }
+
+        }).attachToRecyclerView(recyclerView)
+
 
         viewModel.getAllWeights().observe(viewLifecycleOwner, Observer<List<Weight>> {
             //Update recyclerView adapter to show current notes
             adapter.submitList(it)
         })
+
+
+
     }
 
 

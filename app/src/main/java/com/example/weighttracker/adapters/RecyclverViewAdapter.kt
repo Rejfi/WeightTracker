@@ -1,5 +1,6 @@
 package com.example.weighttracker.adapters
 
+import android.annotation.SuppressLint
 import android.text.style.TtsSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -37,10 +38,11 @@ class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             val weight = getItem(holder.adapterPosition)
-            val weightDate = Date(weight.date * 1000)
-            val date = SimpleDateFormat("EEE, MMM d, ''yy").format(weightDate)
+            val weightDate = Date(weight.date) //Zabrałem mnożenie x1000
+            val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
             holder.weightTextView.text = weight.weight.toString()
             holder.dateTextView.text = date.toString()
@@ -54,5 +56,9 @@ class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>
             val dateTextView = view.findViewById<TextView>(R.id.dateTextView)
             val weightCardView = view.findViewById<CardView>(R.id.weightCardView)
 
+    }
+
+    fun getWeightAtPosition(position: Int): Weight {
+        return getItem(position)
     }
 }

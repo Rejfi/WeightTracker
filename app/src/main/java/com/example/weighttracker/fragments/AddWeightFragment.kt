@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.weighttracker.R
 import com.example.weighttracker.data.Weight
 import com.example.weighttracker.viewmodels.WeightViewModel
+import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_weight.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -21,6 +23,7 @@ import java.util.*
 class AddWeightFragment : Fragment() {
 
     private lateinit var viewModel: WeightViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +36,8 @@ class AddWeightFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application).create(WeightViewModel::class.java)
+
+
 
         submitWeightButton.setOnClickListener {
 

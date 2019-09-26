@@ -11,11 +11,13 @@ import com.example.weighttracker.R
 import com.example.weighttracker.viewmodels.WeightViewModel
 import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.IDataSet
+import kotlin.random.Random
 
 class WeightChart : Fragment(){
 
@@ -36,22 +38,23 @@ class WeightChart : Fragment(){
             WeightViewModel::class.java)
 
         chart = view!!.findViewById(R.id.weight_chart)
-
+        chart.xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
 
         val allWeights = viewModel.getAllWeights().observe(viewLifecycleOwner, Observer {
 
-            //Stworzenie nowego wejścia dla wykresu
-            var noweDane:ArrayList<Entry> = ArrayList()
-
-            var noweEntry = Entry(it[it.lastIndex].weight.toFloat(), 10f)
-            noweDane.add(noweEntry)
+            val arrayOfEntry = ArrayList<Entry>()
+            if(viewModel.getAllWeights().value != null)
+                for(i in viewModel.getAllWeights().value!!.iterator()){
+                    val newEntry = Entry((i.weight+1).toFloat() ,i.weight.toFloat() /*i.date.toFloat()*/)
+                    arrayOfEntry.add(newEntry)
+                }
 
             //Stworzenie LineDataSet
-            var dataSet: LineDataSet = LineDataSet(noweDane,"Test")
+            val dataSet: LineDataSet = LineDataSet(arrayOfEntry,"Twoja historia wag")
             dataSet.valueTextSize = 20f
 
             //Stworzenie danych do narysowania
-            var lineData = LineData(dataSet)
+            val lineData = LineData(dataSet)
 
             chart.data = lineData
 
