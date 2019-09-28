@@ -41,8 +41,8 @@ class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>
     @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             val weight = getItem(holder.adapterPosition)
-            val weightDate = Date(weight.date) //Zabrałem mnożenie x1000
-            val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+            val weightDate = Date(weight.date)
+            val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(weightDate)
 
             holder.weightTextView.text = weight.weight.toString()
             holder.dateTextView.text = date.toString()
@@ -52,9 +52,9 @@ class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>
 
 
     inner class MyViewHolder(view: View): RecyclerView.ViewHolder(view) {
-            val weightTextView = view.findViewById<TextView>(R.id.weightTextView)
-            val dateTextView = view.findViewById<TextView>(R.id.dateTextView)
-            val weightCardView = view.findViewById<CardView>(R.id.weightCardView)
+            val weightTextView: TextView = view.findViewById(R.id.weightTextView)
+            val dateTextView: TextView = view.findViewById(R.id.dateTextView)
+            val weightCardView: CardView = view.findViewById(R.id.weightCardView)
 
     }
 

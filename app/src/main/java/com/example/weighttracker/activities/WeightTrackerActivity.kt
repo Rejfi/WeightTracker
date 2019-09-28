@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.fragment_add_weight.*
 
 class WeightTrackerActivity : AppCompatActivity() {
 
-
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager
 
@@ -38,7 +37,9 @@ class WeightTrackerActivity : AppCompatActivity() {
         tabLayout.setupWithViewPager(viewPager)
 
 
-
+        addWeightFB.setOnClickListener {
+            drawer_layout.openDrawer(addWeightDrawer)
+        }
 
 
     }

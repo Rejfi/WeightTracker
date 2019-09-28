@@ -43,7 +43,7 @@ class WeightChart : Fragment(){
         chart.xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
         chart.xAxis.valueFormatter = MyAxisValueFormatter()
 
-        val allWeights = viewModel.getAllWeights().observe(viewLifecycleOwner, Observer {
+        viewModel.getAllWeights().observe(viewLifecycleOwner, Observer {
 
             val arrayOfEntry = ChartHelper.listWeightToEntry(it)
             dataSet = LineDataSet(arrayOfEntry,"Twoja historia wag")
@@ -59,10 +59,12 @@ class WeightChart : Fragment(){
 
     }
 
+   private inner class MyAxisValueFormatter: IndexAxisValueFormatter(){
+        override fun getFormattedValue(value: Float): String {
+            return SimpleDateFormat("dd-MM", Locale.getDefault()).format(Date(value.toLong()))
+        }
+    }
+
+
 }
 
-private class MyAxisValueFormatter: IndexAxisValueFormatter(){
-    override fun getFormattedValue(value: Float): String {
-        return SimpleDateFormat("dd-MM", Locale.getDefault()).format(Date(value.toLong()))
-    }
-}

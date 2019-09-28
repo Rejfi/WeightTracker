@@ -42,7 +42,7 @@ class WeightTrackerFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(requireContext().applicationContext, 3)
         recyclerView.adapter = adapter
 
-        //Delet notes by swipe
+        //Delete notes by swipe
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT){
             override fun onMove(
                 recyclerView: RecyclerView,
