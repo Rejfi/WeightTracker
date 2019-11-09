@@ -15,20 +15,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="What is your actually weight?" />
+        android:text="@string/actually_weight" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <EditText
+        android:inputType="numberDecimal"
         android:id="@+id/weightAddEditText"
         android:layout_margin="10dp"
-        android:hint="Put your weight"
+        android:hint="@string/put_weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <TextView
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="@string/kg"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </CalendarView>
+
     <Button
         android:id="@+id/submitWeightButton"
+        android:layout_width="130dp"
+        android:layout_height="79dp"
         android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Done" />
+        android:background="@drawable/submit_button"
+        android:text="@string/done"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
 
 </LinearLayout>

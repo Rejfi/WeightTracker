@@ -1,28 +1,26 @@
 package com.example.weighttracker.adapters
 
 import android.annotation.SuppressLint
-import android.text.style.TtsSpan
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weighttracker.R
 import com.example.weighttracker.data.Weight
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeParseException
 import java.util.*
 
-class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>(DIFF_CALLBACK) {
+
+class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>(DIFF_CALLBACK){
+
+    private lateinit var onLongItemClickListener: OnLongItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return MyViewHolder(inflater.inflate(R.layout.weight_row,parent, false))
+        return MyViewHolder(inflater.inflate(com.example.weighttracker.R.layout.weight_row,parent, false))
     }
 
     companion object {
@@ -46,19 +44,32 @@ class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>
 
             holder.weightTextView.text = weight.weight.toString()
             holder.dateTextView.text = date.toString()
-
-
     }
 
 
     inner class MyViewHolder(view: View): RecyclerView.ViewHolder(view) {
-            val weightTextView: TextView = view.findViewById(R.id.weightTextView)
-            val dateTextView: TextView = view.findViewById(R.id.dateTextView)
-            val weightCardView: CardView = view.findViewById(R.id.weightCardView)
+        val weightTextView: TextView = view.findViewById(R.id.weightTextView)
+        val dateTextView: TextView = view.findViewById(R.id.dateTextView)
+        private val weightCardView: CardView = view.findViewById(R.id.weightCardView)
+
+        init {
+            weightCardView.setOnLongClickListener {
+                onLongItemClickListener.onLongItemClick(view, adapterPosition)
+            true
+            }
+        }
 
     }
 
     fun getWeightAtPosition(position: Int): Weight {
         return getItem(position)
     }
+
+    fun setOnLongItemClickListener(listener: OnLongItemClickListener){
+        this.onLongItemClickListener = listener
+    }
+}
+
+interface OnLongItemClickListener{
+    fun onLongItemClick(view: View, position: Int)
 }

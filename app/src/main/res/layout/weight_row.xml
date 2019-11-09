@@ -18,7 +18,7 @@
             android:id="@+id/dateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date" />
+            android:text="@string/date" />
 
         <TextView
             android:id="@+id/weightTextView"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:text="Weight"
+            android:text="@string/weight"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="30sp" />
 

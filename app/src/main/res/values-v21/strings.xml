@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="actually_weight">What is your actually weight?</string>
+    <string name="done">Done</string>
+    <string name="weight">Weight</string>
+    <string name="your_history">Your history</string>
+    <string name="chart">Chart</string>
+    <string name="kg">KG</string>
+</resources>
