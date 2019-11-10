@@ -20,7 +20,7 @@ class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return MyViewHolder(inflater.inflate(com.example.weighttracker.R.layout.weight_row,parent, false))
+        return MyViewHolder(inflater.inflate(R.layout.weight_row,parent, false))
     }
 
     companion object {

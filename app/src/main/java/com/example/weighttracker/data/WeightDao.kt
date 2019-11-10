@@ -15,7 +15,7 @@ interface WeightDao{
     @Delete
     fun delete(weight: Weight)
 
-    @Query("SELECT * FROM weight_table")
+    @Query("SELECT * FROM weight_table ORDER BY date")
     fun getAllWeights(): LiveData<List<Weight>>
 
 

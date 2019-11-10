@@ -6,7 +6,6 @@ import java.security.KeyStore
 
 class ChartHelper {
     companion object{
-
         fun listWeightToEntry(listWeight: List<Weight>): ArrayList<Entry> {
 
             val arrayEntry = ArrayList<Entry>()
