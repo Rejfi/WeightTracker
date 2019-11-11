@@ -7,7 +7,6 @@ import java.security.KeyStore
 class ChartHelper {
     companion object{
         fun listWeightToEntry(listWeight: List<Weight>): ArrayList<Entry> {
-
             val arrayEntry = ArrayList<Entry>()
             for (i in listWeight){
                 val entry = Entry()
@@ -15,7 +14,6 @@ class ChartHelper {
                 entry.x = i.date.toFloat()
                 arrayEntry.add(entry)
             }
-
             return arrayEntry
         }
     }

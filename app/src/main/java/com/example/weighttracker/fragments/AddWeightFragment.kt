@@ -3,19 +3,20 @@ package com.example.weighttracker.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CalendarView
+import android.widget.EditText
 import android.widget.Toast
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 
 import com.example.weighttracker.R
 import com.example.weighttracker.data.Weight
 import com.example.weighttracker.viewmodels.WeightViewModel
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_weight.*
 import java.lang.Exception
@@ -43,8 +44,8 @@ class AddWeightFragment : Fragment() {
         calendarView.setOnDateChangeListener(object : CalendarView.OnDateChangeListener{
             @SuppressLint("SimpleDateFormat")
             override fun onSelectedDayChange(cv: CalendarView, year: Int, month: Int, day: Int) {
-                val stringDate = "$day-$month-$year"
-                val sdf = SimpleDateFormat("dd-M-yyyy")
+                val stringDate = "$day-${month+1}-$year"
+                val sdf = SimpleDateFormat("dd-MM-yyyy")
                 try {
                     date = sdf.parse(stringDate)
                 }catch (e: Exception){
@@ -52,7 +53,6 @@ class AddWeightFragment : Fragment() {
                 }
             }
         })
-
         submitWeightButton.setOnClickListener {
             val actuallyWeight: Double = try {
                 if(weightAddEditText.text.toString().trim().contains(',', false)){
@@ -70,8 +70,10 @@ class AddWeightFragment : Fragment() {
                 val weight = Weight(actuallyWeight, userDate)
                 viewModel.insertWeight(weight)
             }
+            activity!!.findViewById<CalendarView>(R.id.calendarView).clearFocus()
+            activity!!.findViewById<EditText>(R.id.weightAddEditText).isClickable = false
+            activity!!.findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
         }
-
     }
 
 }

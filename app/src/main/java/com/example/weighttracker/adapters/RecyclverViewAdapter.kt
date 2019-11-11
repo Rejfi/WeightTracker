@@ -46,7 +46,6 @@ class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>
             holder.dateTextView.text = date.toString()
     }
 
-
     inner class MyViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val weightTextView: TextView = view.findViewById(R.id.weightTextView)
         val dateTextView: TextView = view.findViewById(R.id.dateTextView)
@@ -58,7 +57,6 @@ class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>
             true
             }
         }
-
     }
 
     fun getWeightAtPosition(position: Int): Weight {

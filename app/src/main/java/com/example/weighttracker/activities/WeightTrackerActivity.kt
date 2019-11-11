@@ -22,7 +22,6 @@ class WeightTrackerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         val fm = supportFragmentManager
         //Set fragment in Navigation Drawer
         fm.beginTransaction().add(R.id.addWeightDrawer, AddWeightFragment()).commit()
