@@ -47,34 +47,42 @@ class WeightChart : Fragment(){
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application).create(
             WeightViewModel::class.java)
 
+        //Chart appearance settings
         chart = view!!.findViewById(R.id.weight_chart)
-        chart.xAxis.position = XAxis.XAxisPosition.BOTTOM_INSIDE
+        chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         chart.xAxis.valueFormatter = MyAxisValueFormatter()
         chart.isAutoScaleMinMaxEnabled = true
         chart.axisRight.isEnabled = false
-        chart.axisRight.axisMinimum = 0f
-        chart.axisLeft.axisMinimum = 0f
+        chart.axisLeft.textSize = 15f
         chart.description = null
 
+        //Data retrieve and draw
         viewModel.getAllWeights().observe(viewLifecycleOwner, Observer {
 
-                val arrayOfEntry = ChartHelper.listWeightToEntry(it)
+            val arrayOfEntry = ChartHelper.listWeightToEntry(it)
                 dataSet = LineDataSet(arrayOfEntry, null)
-                dataSet.valueTextSize = 10f
-                dataSet.lineWidth = 3f
+                dataSet.valueTextSize = 0f
+                dataSet.lineWidth = 5f
+                dataSet.setCircleColor(Color.GREEN)
+                dataSet.circleRadius = 5f
+                dataSet.disableDashedHighlightLine()
+                dataSet.formLineWidth = 0f
 
                 //Set lineData and draw it
                 lineData = LineData(dataSet)
                 chart.data = lineData
+                chart.axisLeft.axisMinimum = chart.yMin-20
+                chart.axisLeft.axisMaximum = chart.yMax+20
+                chart.xAxis.spaceMin = 8640000f
+                chart.xAxis.spaceMax = 2*8640000f
                 chart.invalidate()
-
         })
 
     }
 
    private inner class MyAxisValueFormatter: IndexAxisValueFormatter(){
         override fun getFormattedValue(value: Float): String {
-            return SimpleDateFormat("dd-MM", Locale.getDefault()).format(Date(value.toLong()))
+            return SimpleDateFormat("dd-MM-YY", Locale.getDefault()).format(Date(value.toLong()))
         }
     }
 
