@@ -36,13 +36,12 @@ class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>
         }
     }
 
-    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             val weight = getItem(holder.adapterPosition)
             val weightDate = Date(weight.date)
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(weightDate)
 
-            holder.weightTextView.text = weight.weight.toString()
+            holder.weightTextView.text = weight.weight.toString().plus(" kg")
             holder.dateTextView.text = date.toString()
     }
 

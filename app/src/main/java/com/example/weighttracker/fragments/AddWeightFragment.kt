@@ -39,21 +39,47 @@ class AddWeightFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application).create(WeightViewModel::class.java)
+        viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application)
+            .create(WeightViewModel::class.java)
 
-        calendarView.setOnDateChangeListener(object : CalendarView.OnDateChangeListener{
+        calendarView.setOnDateChangeListener(object : CalendarView.OnDateChangeListener {
             @SuppressLint("SimpleDateFormat")
             override fun onSelectedDayChange(cv: CalendarView, year: Int, month: Int, day: Int) {
-                val stringDate = "$day-${month+1}-$year"
+                val stringDate = "$day-${month + 1}-$year"
                 val sdf = SimpleDateFormat("dd-MM-yyyy")
                 try {
                     date = sdf.parse(stringDate)
-                }catch (e: Exception){
+                } catch (e: Exception) {
                     throw e
                 }
+                val actuallyWeight: Double = try {
+                    if (weightAddEditText.text.toString().trim().contains(',', false)) {
+                        weightAddEditText.text.toString().replace(',', '.')
+                    }
+                    weightAddEditText.text.toString().toDouble()
+
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        context,
+                        "Your weight is very strange. Check your data",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    0.0
+                }
+                val userDate = date.time
+                if (actuallyWeight > 0.0) {
+                    val weight = Weight(actuallyWeight, userDate)
+                    viewModel.insertWeight(weight)
+                }
+                activity!!.findViewById<DrawerLayout>(R.id.drawer_layout)
+                    .closeDrawer(GravityCompat.START)
             }
+
         })
+        /*
         submitWeightButton.setOnClickListener {
+
             val actuallyWeight: Double = try {
                 if(weightAddEditText.text.toString().trim().contains(',', false)){
                     weightAddEditText.text.toString().replace(',','.')
@@ -74,7 +100,10 @@ class AddWeightFragment : Fragment() {
             activity!!.findViewById<EditText>(R.id.weightAddEditText).isClickable = false
             activity!!.findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
         }
-    }
 
+
+        }
+    */
+    }
 }
 
