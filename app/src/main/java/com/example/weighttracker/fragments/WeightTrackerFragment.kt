@@ -35,7 +35,6 @@ class WeightTrackerFragment : Fragment(), View.OnCreateContextMenuListener{
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application).create(WeightViewModel::class.java)
         recyclerView = view!!.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(requireContext().applicationContext, 3)

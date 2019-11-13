@@ -3,11 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".fragments.AddWeightFragment"
     android:orientation="vertical"
-    android:gravity="center_vertical|center_horizontal"
-    >
+    android:gravity="center_horizontal">
 
     <TextView
         android:textAlignment="center"
@@ -44,14 +43,15 @@
         android:layout_height="wrap_content">
     </CalendarView>
 
+    <!--
     <Button
         android:id="@+id/submitWeightButton"
         android:layout_width="130dp"
         android:layout_height="79dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/submit_button"
         android:text="@string/done"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:textSize="20sp" /> -->
 
 </LinearLayout>
