@@ -11,11 +11,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.Toast
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 
 import com.example.weighttracker.R
 import com.example.weighttracker.data.Weight
 import com.example.weighttracker.viewmodels.WeightViewModel
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_weight.*
 import java.lang.Exception
@@ -40,18 +42,15 @@ class AddWeightFragment : Fragment() {
 
         viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application).create(WeightViewModel::class.java)
 
-        calendarView.setOnDateChangeListener(object : CalendarView.OnDateChangeListener{
-            @SuppressLint("SimpleDateFormat")
-            override fun onSelectedDayChange(cv: CalendarView, year: Int, month: Int, day: Int) {
-                val stringDate = "$day-$month-$year"
-                val sdf = SimpleDateFormat("dd-M-yyyy")
-                try {
-                    date = sdf.parse(stringDate)
-                }catch (e: Exception){
-                    throw e
-                }
+        calendarView.setOnDateChangeListener { cv, year, month, day ->
+            val stringDate = "$day-$month-$year"
+            val sdf = SimpleDateFormat("dd-M-yyyy")
+            try {
+                date = sdf.parse(stringDate)
+            }catch (e: Exception){
+                throw e
             }
-        })
+        }
 
         submitWeightButton.setOnClickListener {
             val actuallyWeight: Double = try {
@@ -70,6 +69,9 @@ class AddWeightFragment : Fragment() {
                 val weight = Weight(actuallyWeight, userDate)
                 viewModel.insertWeight(weight)
             }
+            activity!!.findViewById<NavigationView>(R.id.addWeightDrawer)!!.menu!!.close()
+
+
         }
 
     }
