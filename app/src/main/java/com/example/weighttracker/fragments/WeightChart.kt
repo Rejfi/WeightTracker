@@ -1,28 +1,20 @@
 package com.example.weighttracker.fragments
 
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.weighttracker.R
-import com.example.weighttracker.helper.ChartHelper
+import com.example.weighttracker.data.Weight
 import com.example.weighttracker.viewmodels.WeightViewModel
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.renderer.YAxisRenderer
-import com.github.mikephil.charting.utils.ViewPortHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -59,8 +51,11 @@ class WeightChart : Fragment(){
         //Data retrieve and draw
         viewModel.getAllWeights().observe(viewLifecycleOwner, Observer {
 
-            val arrayOfEntry = ChartHelper.listWeightToEntry(it)
+            val arrayOfEntry = listWeightToEntry(it)
+
                 dataSet = LineDataSet(arrayOfEntry, null)
+
+                //Line chart draw settings
                 dataSet.valueTextSize = 0f
                 dataSet.lineWidth = 5f
                 dataSet.setCircleColor(Color.GREEN)
@@ -80,11 +75,30 @@ class WeightChart : Fragment(){
 
     }
 
+    /**
+     * Class responsible for bottom XAxis values
+     */
    private inner class MyAxisValueFormatter: IndexAxisValueFormatter(){
         override fun getFormattedValue(value: Float): String {
             return SimpleDateFormat("dd-MM-YY", Locale.getDefault()).format(Date(value.toLong()))
         }
     }
+
+    /**
+     * Function convert weights to entries for chart
+     * @param listWeight List<Weight> contains data for chart
+     * @return ArrayList<Entry> data which can put into chart
+     */
+    private fun listWeightToEntry(listWeight: List<Weight>): ArrayList<Entry> {
+            val arrayEntry = ArrayList<Entry>()
+            for (i in listWeight){
+                val entry = Entry()
+                entry.y = i.weight.toFloat()
+                entry.x = i.date.toFloat()
+                arrayEntry.add(entry)
+            }
+            return arrayEntry
+        }
 
 }
 

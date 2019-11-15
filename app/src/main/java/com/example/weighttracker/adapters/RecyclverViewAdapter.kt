@@ -1,9 +1,9 @@
 package com.example.weighttracker.adapters
 
-import android.annotation.SuppressLint
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -18,11 +18,6 @@ class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>
 
     private lateinit var onLongItemClickListener: OnLongItemClickListener
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return MyViewHolder(inflater.inflate(R.layout.weight_row,parent, false))
-    }
-
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Weight>() {
             override fun areItemsTheSame(oldItem: Weight, newItem: Weight): Boolean {
@@ -31,9 +26,13 @@ class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>
 
             override fun areContentsTheSame(oldItem: Weight, newItem: Weight): Boolean {
                 return oldItem.weight == newItem.weight && oldItem.date == newItem.date
-
             }
         }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        return MyViewHolder(inflater.inflate(R.layout.weight_row,parent, false))
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

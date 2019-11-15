@@ -17,7 +17,6 @@ class WeightViewModel(application: Application): AndroidViewModel(application) {
     private var allWeights: Deferred<LiveData<List<Weight>>> =
         weightRepository.getAllWeightsAsync()
 
-
     fun insertWeight(weight: Weight){
         weightRepository.insertWeight(weight)
     }

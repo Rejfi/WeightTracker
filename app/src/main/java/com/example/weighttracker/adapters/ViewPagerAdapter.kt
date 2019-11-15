@@ -8,8 +8,8 @@ import com.example.weighttracker.fragments.WeightChart
 import com.example.weighttracker.fragments.WeightTrackerFragment
 
 class ViewPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm,
-    BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
-) {
+    BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
     override fun getItem(position: Int): Fragment {
         return when(position){
             0 -> WeightTrackerFragment()

@@ -26,20 +26,19 @@ class WeightTrackerActivity : AppCompatActivity() {
         //Set fragment in Navigation Drawer
         fm.beginTransaction().add(R.id.addWeightDrawer, AddWeightFragment()).commit()
 
-        //Find Views
+        //Find viewPager and tabLayout
         viewPager = findViewById(R.id.viewPager)
         tabLayout = findViewById(R.id.tabLayout)
         //-------------
 
-        //Setup viewpager and tablayout together
+        //Setup viewpager and tabLayout together
         viewPager.adapter = ViewPagerAdapter(fm)
         tabLayout.setupWithViewPager(viewPager)
 
-
+        //Floating button opens drawer
         addWeightFB.setOnClickListener {
             drawer_layout.openDrawer(addWeightDrawer)
         }
-
 
     }
 

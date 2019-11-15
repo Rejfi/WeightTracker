@@ -16,11 +16,8 @@ import com.example.weighttracker.data.Weight
 import com.example.weighttracker.viewmodels.WeightViewModel
 
 class WeightTrackerFragment : Fragment(), View.OnCreateContextMenuListener{
-
-
     private lateinit var viewModel: WeightViewModel
     private lateinit var recyclerView: RecyclerView
-    private var currentPosition: Int = -1
     private lateinit var adapter: RecyclerViewAdapter
 
     override fun onCreateView(
@@ -31,11 +28,14 @@ class WeightTrackerFragment : Fragment(), View.OnCreateContextMenuListener{
         return inflater.inflate(R.layout.weight_tracker_fragment, container, false)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application).create(WeightViewModel::class.java)
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application).create(WeightViewModel::class.java)
         recyclerView = view!!.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(requireContext().applicationContext, 3)
         adapter = RecyclerViewAdapter()
@@ -53,9 +53,7 @@ class WeightTrackerFragment : Fragment(), View.OnCreateContextMenuListener{
             }
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 viewModel.deleteWeight(adapter.getWeightAtPosition(viewHolder.adapterPosition))
-
             }
-
         }).attachToRecyclerView(recyclerView)
 
         viewModel.getAllWeights().observe(viewLifecycleOwner, Observer<List<Weight>> {
@@ -64,19 +62,5 @@ class WeightTrackerFragment : Fragment(), View.OnCreateContextMenuListener{
         })
     }
 
-    override fun onCreateContextMenu(
-        menu: ContextMenu,
-        v: View,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
-        val edit = menu!!.add(Menu.NONE, 1, 1, "Edit")
-        val delete = menu!!.add(Menu.NONE, 1, 1, "Delete")
-        edit.setOnMenuItemClickListener {
-            Toast.makeText(view?.context, "EDIT", Toast.LENGTH_SHORT)
-                .show()
-            true
-        }
-
-    }
 
 }
