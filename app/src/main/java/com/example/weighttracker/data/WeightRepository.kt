@@ -13,8 +13,7 @@ class WeightRepository (application: Application){
     //Get database instance
     init {
         val database: WeightDatabase = WeightDatabase.getInstance(
-            application.applicationContext
-        )!!
+            application.applicationContext)!!
         weightDao = database.weightDao()
         allWeights = weightDao.getAllWeights()
     }

@@ -48,13 +48,6 @@ class RecyclerViewAdapter: ListAdapter<Weight, RecyclerViewAdapter.MyViewHolder>
         val weightTextView: TextView = view.findViewById(R.id.weightTextView)
         val dateTextView: TextView = view.findViewById(R.id.dateTextView)
         private val weightCardView: CardView = view.findViewById(R.id.weightCardView)
-
-        init {
-            weightCardView.setOnLongClickListener {
-                onLongItemClickListener.onLongItemClick(view, adapterPosition)
-            true
-            }
-        }
     }
 
     fun getWeightAtPosition(position: Int): Weight {
